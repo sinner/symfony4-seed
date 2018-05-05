@@ -1,0 +1,46 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+    mailer_user: '%env(APP_MAILER_USER)%'
+    mailer_username: '%mailer_user%'
+    from_email_no_reply: '%env(APP_FROM_EMAIL_NO_REPLY)%'
+    app_environment: '%env(APP_ENV)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+        bind:
+            $environment: '%app_environment%'
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    # No auto-wired services
+    app.user.mailer.rest:
+         class: App\Services\Globals\RestMailer
+         arguments:
+              $mailer: '@swiftmailer.mailer'
+              $router: '@router'
+              $twig: '@twig'
+              $fromEmail: '%from_email_no_reply%'
+
+imports:
+    - { resource: eventsubscribers.yaml }

@@ -1,0 +1,13 @@
+<div style="margin:10px;">
+    <p>
+        All services respond with the following object. The "documentation" section of each service displays what the "data" property will contain in the response.
+    </p>
+    <pre>
+        {
+            code: int. Should contain the http response code,
+            is_success: boolean. True if the request was successfully processed. False if something went wrong while processing the request,
+            message: string - Optional. A server message regarding the response.,
+            data: mixed - Optional. The service output when available.
+        }
+    </pre>
+</div>

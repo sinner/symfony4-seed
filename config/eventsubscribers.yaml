@@ -1,0 +1,56 @@
+services:
+
+    app.eventsubscriber.kernelrequest.jsoncontent:
+        autowire: false
+        class: App\EventSubscriber\JsonTransformerOnRequestSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+
+    app.eventsubscriber.validationerrors:
+        autowire: false
+        class: App\EventSubscriber\ValidationErrorsSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+        arguments: ['@fos_rest.view_handler']
+
+    app.eventsubscriber.kernelview:
+        autowire: false
+        class: App\EventSubscriber\KernelViewSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+        arguments: ['@translator']
+
+    app.eventsubscriber.resourcenotfoundexception:
+        autowire: false
+        class: App\EventSubscriber\ResourceNotFoundExceptionSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+        arguments: ['@fos_rest.view_handler']
+
+    app.eventsubscriber.invalidtokenexception:
+        autowire: false
+        class: App\EventSubscriber\InvalidTokenExceptionSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+        arguments: ['@fos_rest.view_handler', '@translator']
+
+    app.eventsubscriber.loginexception:
+        autowire: false
+        class: App\EventSubscriber\LoginExceptionSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+        arguments: ['@fos_rest.view_handler', '@security.http_utils', '@security.firewall.map', '@translator']
+
+    app.eventsubscriber.kernelexception:
+        autowire: false
+        class: App\EventSubscriber\KernelExceptionSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+        arguments: ['@fos_rest.view_handler', '@logger', '@translator', '%app_environment%']
+
+    app.eventsubscriber.jwtauthentication:
+        autowire: false
+        class: App\EventSubscriber\JWTAuthenticationSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+        arguments: ['@jms_serializer', '@translator']

@@ -1,0 +1,10 @@
+user:
+  username:
+    not_blank: 'Please specify a username.'
+    length:
+      min: 'Please specify a username at least {{ limit }} characters.'
+      max: 'Please specify a username less than {{ limit }} characters.'
+  email:
+    not_blank: 'Please specify an email.'
+  display_name:
+    not_blank: 'Please specify a name.'

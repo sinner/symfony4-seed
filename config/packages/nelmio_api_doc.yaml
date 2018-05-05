@@ -1,0 +1,34 @@
+# API Doc Configuration
+nelmio_api_doc:
+    areas:
+        path_patterns: # an array of regexps
+            - ^/api(?!/doc$)
+        host_patterns:
+            - ^api\.
+    documentation:
+        schemes: [http, https]
+        info:
+            title: Diocesan - API Documentation
+            description: Diocesan - API Documentation
+            version: 1.0.0
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Value: Bearer {jwt}'
+                name: Authorization
+                in: header
+        sandbox:
+            accept-type: json
+            body_format:
+                formats: [json]
+                default_format: json
+            enabled: true
+            request_format:
+                method: accept_header
+                formats: []
+                default_format: json
+        security:
+            - Bearer: []
+        cache:
+            # We should enable cache if\when api exposed in prod
+            enabled: false
