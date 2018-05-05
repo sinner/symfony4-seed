@@ -12,3 +12,14 @@ app.swagger:
     methods: GET
     defaults: { _controller: nelmio_api_doc.controller.swagger }
 
+app_auth_login:
+    type: rest
+    resource: App\Controller\LoginController
+
+app_profile_management:
+    type: rest
+    resource: App\Controller\User\ProfileController
+
+app_password_management:
+    type: rest
+    resource: App\Controller\User\PasswordManagementController

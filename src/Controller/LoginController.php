@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Controller;
-
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use App\Services\Globals\ApiResponse;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -21,18 +23,34 @@ class LoginController extends FOSRestController implements ClassResourceInterfac
     /**
      * This endpoint lets the user login into the system and it will return a token (JWT)
      *
-     * @ApiDoc(
-     *     section = "Public",
-     *     description="This endpoint makes the authentication possible",
+     * @Operation(
+     *     tags={"Public"},
+     *     summary="his endpoint makes the authentication possible",
      *     method="POST",
-     *     parameters={
-     *         {"name"="username", "dataType"="string", "required"=true, "description"="User Name"},
-     *         {"name"="password", "dataType"="string", "required"=true, "description"="User Password"}
-     *     },
-     *     statusCodes={
-     *         200="Returned when the login process is successful",
-     *         401="Returned when the user has not provided his credentials correctly"
-     *     }
+     *     @SWG\Parameter(
+     *         name="username",
+     *         in="body",
+     *         description="Username",
+     *         required=true,
+     *         type="string",
+     *         schema=""
+     *     ),
+     *     @SWG\Parameter(
+     *         name="password",
+     *         in="body",
+     *         description="User Password",
+     *         required=true,
+     *         type="string",
+     *         schema=""
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when the login process is successful"
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Returned when the user has not provided his credentials correctly"
+     *     )
      * )
      */
     public function postAction()

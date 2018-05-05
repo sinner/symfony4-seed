@@ -2,22 +2,25 @@
 
 declare(strict_types=1);
 
-namespace EN\Api\AppBundle\Controller;
+namespace App\Controller\User;
 
-use EN\Api\ApiBundle\Controller\AbstractController;
-use EN\Api\ApiBundle\Exception\Api as ApiException;
-use EN\Api\ApiBundle\Response\Api as ApiResponse;
-use EN\Api\AppBundle\Form\User\ChangePasswordFormType;
-use EN\OneReachBasic\DoctrineBundle\Entity\User;
+use App\Controller\AbstractController;
+use App\Exception\ApiException;
+use App\Services\Globals\ApiResponse;
+use App\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\UserBundle\Event\GetResponseNullableUserEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
+use FOS\UserBundle\Form\Type\ChangePasswordFormType;
 use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\HttpFoundation\Response;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,23 +44,26 @@ class PasswordManagementController extends AbstractController implements ClassRe
      * @Rest\Post("/public/password/reset/request")
      * @Rest\View(serializerGroups={"public_read", "api_response"})
      *
-     * @ApiDoc(
-     *     section = "Public",
-     *     authentication = false,
-     *     description = "This endpoint gives to users, already registered, the ability to request the reset of its own password
-     *                    It's required to provide the email or the username to this operation",
-     *     method = "POST",
-     *     parameters = {
-     *         {"name"="username", "dataType"="string", "required"=true, "description"="Username or Email"}
-     *     },
-     *     statusCodes = {
-     *         200="Request processed.",
-     *         400="Bad Request. Some of the data could have an error."
-     *     },
-     *     output = {
-     *
-     *     }
+     * @Operation(
+     *     tags={"Public"},
+     *     summary="This endpoint gives to users, already registered, the ability to request the reset of its own password It's required to provide the email or the username to this operation",
+     *     @SWG\Parameter(
+     *         name="username",
+     *         in="formData",
+     *         description="Username or Email",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Request processed."
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Bad Request. Some of the data could have an error."
+     *     )
      * )
+     *
      *
      * @param Request $request
      * @return ApiResponse
@@ -155,20 +161,26 @@ class PasswordManagementController extends AbstractController implements ClassRe
      *
      * @Rest\Post("/public/password/reset/confirm")
      *
-     * @ApiDoc(
-     *     section = "Public",
-     *     authentication = false,
-     *     description = "This endpoint gives to users, already registered, the ability to reset its own password.
-     *                   It's required to provide the current password, new password and password confirmation",
-     *     method = "POST",
-     *     parameters = {
-     *          {"name"="token", "dataType"="string"}
-     *     },
-     *     statusCodes = {
-     *         200="Request processed.",
-     *         400="Bad Request. Some of the data could have an error."
-     *     }
+     * @Operation(
+     *     tags={"Public"},
+     *     summary="This endpoint gives to users, already registered, the ability to reset its own password. It's required to provide the current password, new password and password confirmation",
+     *     @SWG\Parameter(
+     *         name="token",
+     *         in="formData",
+     *         description="todo",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Request processed."
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Bad Request. Some of the data could have an error."
+     *     )
      * )
+     *
      *
      * @param Request $request
      * @return Response
@@ -250,22 +262,27 @@ class PasswordManagementController extends AbstractController implements ClassRe
      * @Rest\Put("/password/")
      * @Rest\View(serializerGroups={"api_response"})
      *
-     * @ApiDoc(
-     *     section = "Authenticated",
-     *     authentication = true,
-     *     description = "This method Change user password",
-     *     method = "PUT",
-     *     headers = {
-     *         {"name":"Authorization", "required":true, "description":"Your login token."}
-     *     },
-     *     parameters = {
-     *          {"name"="token", "dataType"="string"}
-     *     },
-     *     statusCodes = {
-     *         200="Request processed.",
-     *         400="Bad Request. Some of the data could have an error."
-     *     }
+     * @Operation(
+     *     tags={"Authenticated"},
+     *     summary="This method Change user password",
+     *     @SWG\Parameter(
+     *         name="token",
+     *         in="body",
+     *         description="todo",
+     *         required=false,
+     *         type="string",
+     *         schema=""
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Request processed."
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Bad Request. Some of the data could have an error."
+     *     )
      * )
+     *
      *
      *
      * @param Request $request
@@ -329,33 +346,4 @@ class PasswordManagementController extends AbstractController implements ClassRe
         return $apiResponse;
     }
 
-    /**
-     * @Rest\Get("/public/password/")
-     *
-     * @return Response
-     */
-    public function helloWorldMailAction(): Response
-    {
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Hello Email')
-            ->setFrom('send@example.com')
-            ->setTo('dtorres@teravisiontech.com')
-            ->setBody(
-                $this->renderView(
-                    'AppBundle:hello:email.txt.twig',
-                    array('name' => "Danny")
-                )
-            )
-        ;
-        $mailer = $this->get('mailer');
-        if (!$mailer->send($message, $failures)) {
-            $errorMessage = "Failures";
-            $append = [$errorMessage => $failures];
-
-        } else {
-            $append =  'email sent successfully';
-        }
-
-        return new Response(json_encode(["message" => $append]));
-    }
 }

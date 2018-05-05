@@ -1,11 +1,16 @@
 framework:
     secret: '%env(APP_SECRET)%'
     default_locale: '%env(APP_DEFAULT_LOCATION)%'
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
     translator:
       fallbacks: ['%env(APP_DEFAULT_LOCATION)%']
 
     #csrf_protection: true
-    #http_method_override: true
+    http_method_override: true
 
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
@@ -13,7 +18,7 @@ framework:
         handler_id: ~
 
     #esi: true
-    #fragments: true
+    fragments: ~
     php_errors:
         log: true
 
@@ -30,7 +35,7 @@ framework:
         #default_redis_provider: redis://localhost
 
         # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
-        #app: cache.adapter.apcu
+        # app: cache.adapter.apcu
 
 sensio_framework_extra:
     request:
