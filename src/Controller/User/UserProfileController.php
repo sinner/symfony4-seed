@@ -14,38 +14,48 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 /**
- * @RouteResource("profile", pluralize=false)
+ * @RouteResource("user-profile", pluralize=false)
  */
-class ProfileController extends AbstractController implements ClassResourceInterface
+class UserProfileController extends AbstractController implements ClassResourceInterface
 {
 
     /**
      *
-     * This endpoint gives you the properties of the profile of the user already logged in
+     * This endpoint gives you the properties of the profile of the user already logged in.
      *
-     * @Rest\Get("/profile")
+     * @Rest\Get("/user-profile")
      * @Rest\View(serializerGroups={"public_read", "api_response"})
      *
      * @Operation(
      *     tags={"Authenticated"},
-     *     summary="This endpoint gives you the properties of the profile of the user already logged in",
+     *     summary="This endpoint gives you the properties of the profile of the user already logged in.",
+     *     @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         description="JWT Bearer",
+     *         required=true,
+     *         type="string"
+     *     ),
      *     @SWG\Response(
      *         response="200",
-     *         description="Request processed.",
-     *         @SWG\Schema(ref=@Model(type="App\Entity\User"))
+     *         description="The current user is returned successfully.",
+     *         @SWG\Schema(ref=@Model(
+     *             type="App\Entity\User",
+     *             groups={"public_read"}
+     *         ))
      *     ),
      *     @SWG\Response(
      *         response="401",
      *         description="Unauthorized request."
      *     )
      * )
-     *
      *
      * @return User
      *
@@ -58,9 +68,9 @@ class ProfileController extends AbstractController implements ClassResourceInter
     }
 
     /**
-     * This endpoint gives to users, already logged in, the ability to update its own profile
+     * This endpoint gives to users, already logged in, the ability to update its own profile.
      *
-     * @Rest\Put("/profile")
+     * @Rest\Put("/user-profile")
      * @Rest\View(serializerGroups={"public_read", "api_response"})
      *
      * @ParamConverter("userToUpdate", converter="fos_rest.request_body",
@@ -71,17 +81,30 @@ class ProfileController extends AbstractController implements ClassResourceInter
      *     tags={"Authenticated"},
      *     summary="This endpoint gives to users, already logged in, the ability to update its own profile",
      *     @SWG\Parameter(
-     *         name="display_name",
+     *         name="Authorization",
+     *         in="header",
+     *         description="JWT Bearer",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="user",
      *         in="body",
-     *         description="Display Name",
+     *         description="User Data To be Updated.",
      *         required=false,
-     *         type="string",
-     *         schema=""
+     *         type="object",
+     *         @SWG\Schema(ref=@Model(
+     *             type="App\Entity\User",
+     *             groups={"public_read"}
+     *         ))
      *     ),
      *     @SWG\Response(
      *         response="200",
      *         description="Request processed.",
-     *         @SWG\Schema(ref=@Model(type="App\Entity\User"))
+     *         @SWG\Schema(ref=@Model(
+     *             type="App\Entity\User",
+     *             groups={"public_read"}
+     *         ))
      *     ),
      *     @SWG\Response(
      *         response="400",
@@ -92,7 +115,6 @@ class ProfileController extends AbstractController implements ClassResourceInter
      *         description="Unauthorized request."
      *     )
      * )
-     *
      *
      * @param Request $request
      * @param User $userToUpdate

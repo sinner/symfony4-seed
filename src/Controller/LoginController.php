@@ -25,38 +25,38 @@ class LoginController extends FOSRestController implements ClassResourceInterfac
      *
      * @Operation(
      *     tags={"Public"},
-     *     summary="his endpoint makes the authentication possible",
+     *     summary="This endpoint makes the authentication possible.",
      *     method="POST",
      *     @SWG\Parameter(
-     *         name="username",
+     *         name="Credentials",
      *         in="body",
-     *         description="Username",
+     *         description="Credentials - Login and Password",
      *         required=true,
-     *         type="string",
-     *         schema=""
-     *     ),
-     *     @SWG\Parameter(
-     *         name="password",
-     *         in="body",
-     *         description="User Password",
-     *         required=true,
-     *         type="string",
-     *         schema=""
+     *         type="object",
+     *         @SWG\Schema(type="object",
+     *             @SWG\Property(property="username", description="Username", type="string"),
+     *             @SWG\Property(property="password", description="User Password", type="string"),
+     *             required={
+     *                 "username",
+     *                 "password"
+     *             }
+     *         )
      *     ),
      *     @SWG\Response(
      *         response="200",
-     *         description="Returned when the login process is successful"
+     *         description="Returned when the login process is successful."
      *     ),
      *     @SWG\Response(
      *         response="401",
-     *         description="Returned when the user has not provided his credentials correctly"
+     *         description="Returned when the user has not provided his credentials correctly."
      *     )
      * )
+     *
      */
     public function postAction()
     {
         // route handled by Lexik JWT Authentication Bundle
-        throw new \DomainException('Has occurred an unknown error during the login process');
+        throw new \DomainException('Has occurred an unknown error during the login process.');
     }
 
 }

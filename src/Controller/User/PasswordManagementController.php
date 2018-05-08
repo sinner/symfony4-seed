@@ -46,13 +46,15 @@ class PasswordManagementController extends AbstractController implements ClassRe
      *
      * @Operation(
      *     tags={"Public"},
-     *     summary="This endpoint gives to users, already registered, the ability to request the reset of its own password It's required to provide the email or the username to this operation",
+     *     summary="This endpoint gives to users, already registered, the ability to request the reset of its own password It's required to provide the email or the username to this operation.",
+     *     method="POST",
      *     @SWG\Parameter(
      *         name="username",
-     *         in="formData",
+     *         in="body",
      *         description="Username or Email",
-     *         required=false,
-     *         type="string"
+     *         required=true,
+     *         type="string",
+     *         schema={}
      *     ),
      *     @SWG\Response(
      *         response="200",
@@ -63,7 +65,6 @@ class PasswordManagementController extends AbstractController implements ClassRe
      *         description="Bad Request. Some of the data could have an error."
      *     )
      * )
-     *
      *
      * @param Request $request
      * @return ApiResponse
@@ -137,8 +138,6 @@ class PasswordManagementController extends AbstractController implements ClassRe
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::RESETTING_SEND_EMAIL_COMPLETED, $event);
 
-
-
         if (null !== $event->getResponse()) {
             $apiResponse->setData($event->getResponse());
             return $apiResponse;
@@ -159,17 +158,25 @@ class PasswordManagementController extends AbstractController implements ClassRe
      * This endpoint gives to users, already registered, the ability to reset its own password.
      * It's required to provide the current password, new password and password confirmation
      *
-     * @Rest\Post("/public/password/reset/confirm")
+     * @Rest\Put("/public/password/reset/confirm")
      *
      * @Operation(
      *     tags={"Public"},
      *     summary="This endpoint gives to users, already registered, the ability to reset its own password. It's required to provide the current password, new password and password confirmation",
+     *     method="PUT",
      *     @SWG\Parameter(
-     *         name="token",
-     *         in="formData",
-     *         description="todo",
-     *         required=false,
-     *         type="string"
+     *         name="Plain Password",
+     *         in="body",
+     *         description="Username or Email",
+     *         required=true,
+     *         type="object",
+     *         @SWG\Schema(type="object",
+     *             @SWG\Property(
+     *                 property="plainPassword", type="object",
+     *                 @SWG\Property(property="first", type="string"),
+     *                 @SWG\Property(property="second", type="string")
+     *             ),
+     *         )
      *     ),
      *     @SWG\Response(
      *         response="200",
@@ -180,7 +187,6 @@ class PasswordManagementController extends AbstractController implements ClassRe
      *         description="Bad Request. Some of the data could have an error."
      *     )
      * )
-     *
      *
      * @param Request $request
      * @return Response
@@ -255,23 +261,38 @@ class PasswordManagementController extends AbstractController implements ClassRe
         );
     }
 
-
     /**
-     * This method Change user password
+     * This method makes able to the user already authenticated change his password.
      *
      * @Rest\Put("/password/")
      * @Rest\View(serializerGroups={"api_response"})
      *
      * @Operation(
      *     tags={"Authenticated"},
-     *     summary="This method Change user password",
+     *     summary="This method makes able to the user already authenticated change his password.",
+     *     @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         description="JWT Bearer",
+     *         required=true,
+     *         type="string"
+     *     ),
      *     @SWG\Parameter(
      *         name="token",
      *         in="body",
      *         description="todo",
      *         required=false,
-     *         type="string",
-     *         schema=""
+     *         type="object",
+     *         @SWG\Schema(type="object",
+     *             @SWG\Property(
+     *                 property="token", type="string",
+     *             ),
+     *             @SWG\Property(
+     *                 property="plainPassword", type="object",
+     *                 @SWG\Property(property="first", type="string"),
+     *                 @SWG\Property(property="second", type="string")
+     *             ),
+     *         )
      *     ),
      *     @SWG\Response(
      *         response="200",
@@ -282,8 +303,6 @@ class PasswordManagementController extends AbstractController implements ClassRe
      *         description="Bad Request. Some of the data could have an error."
      *     )
      * )
-     *
-     *
      *
      * @param Request $request
      * @return ApiResponse

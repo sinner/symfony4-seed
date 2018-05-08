@@ -2,9 +2,7 @@
 nelmio_api_doc:
     areas:
         path_patterns: # an array of regexps
-            - ^/api(?!/doc$)
-        host_patterns:
-            - ^api\.
+            - ^/(?!_)(?!api)
     documentation:
         schemes: [http, https]
         info:
@@ -20,7 +18,7 @@ nelmio_api_doc:
         sandbox:
             accept-type: json
             body_format:
-                formats: [json]
+                formats: [json, html]
                 default_format: json
             enabled: true
             request_format:
