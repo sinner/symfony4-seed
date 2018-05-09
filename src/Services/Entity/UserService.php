@@ -4,7 +4,7 @@ namespace App\Services\Entity;
 
 use App\Services\Entity\Abstracts\EntityServiceAbstract;
 use Doctrine\ORM\EntityManager;
-use App\Entity\Repository\UserRepository;
+use App\Repository\UserRepository;
 
 /**
  * Class UserService
