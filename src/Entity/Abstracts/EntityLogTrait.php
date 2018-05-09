@@ -43,9 +43,9 @@ trait EntityLogTrait
 
     /**
      * @param mixed $referenceProxies
-     * @return EntityLogTrait
+     * @return EntityInterface
      */
-    public function setReferenceProxies($referenceProxies): EntityLogTrait
+    public function setReferenceProxies($referenceProxies): EntityInterface
     {
         $this->referenceProxies = $referenceProxies;
         return $this;
@@ -61,9 +61,9 @@ trait EntityLogTrait
 
     /**
      * @param \DateTime $createdAt
-     * @return EntityLogTrait
+     * @return EntityInterface
      */
-    public function setCreatedAt(\DateTime $createdAt): EntityLogTrait
+    public function setCreatedAt(\DateTime $createdAt): EntityInterface
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -79,9 +79,9 @@ trait EntityLogTrait
 
     /**
      * @param \DateTime $updatedAt
-     * @return EntityLogTrait
+     * @return EntityInterface
      */
-    public function setUpdatedAt(\DateTime $updatedAt): EntityLogTrait
+    public function setUpdatedAt(\DateTime $updatedAt): EntityInterface
     {
         $this->updatedAt = $updatedAt;
         return $this;
