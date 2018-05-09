@@ -13,14 +13,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(
- *     name="system_user",
+ *     name="users",
  *     uniqueConstraints={
  *        @ORM\UniqueConstraint(name="email_uidx", columns={"email"}),
  *        @ORM\UniqueConstraint(name="username_uidx", columns={"username"}),
  *        @ORM\UniqueConstraint(name="public_uidx", columns={"public_id"})
  *     }
  * )
- * @ORM\Entity(repositoryClass="App\Entity\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
  *
  * @UniqueEntity("email")
