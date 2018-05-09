@@ -1,0 +1,2 @@
+parameters:
+    database_url: '%env(resolve:DATABASE_URL)%_test'
