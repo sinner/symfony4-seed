@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(
- *     name="user",
+ *     name="system_user",
  *     uniqueConstraints={
  *        @ORM\UniqueConstraint(name="email_uidx", columns={"email"}),
  *        @ORM\UniqueConstraint(name="username_uidx", columns={"username"}),
