@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Entity\Abstracts;
 
 use App\Entity\Abstracts\EntityInterface;

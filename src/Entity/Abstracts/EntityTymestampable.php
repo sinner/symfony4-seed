@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\Abstracts;
 
 use Doctrine\ORM\Mapping as ORM;

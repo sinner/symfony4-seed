@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Globals;
 
 use FOS\UserBundle\Mailer\MailerInterface;

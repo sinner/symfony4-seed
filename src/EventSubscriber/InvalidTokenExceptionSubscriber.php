@@ -1,10 +1,4 @@
 <?php
-/**
- * Contains App\EventSubscriber\InvalidTokenException
- *
- * @package EN\Api\ApiBundle
- * @subpackage EventSubscriber
- */
 
 declare(strict_types=1);
 
