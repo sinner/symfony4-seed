@@ -79,3 +79,5 @@ compiled
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+public/phpunit-report
