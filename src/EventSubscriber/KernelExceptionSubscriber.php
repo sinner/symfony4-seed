@@ -96,7 +96,12 @@ class KernelExceptionSubscriber implements EventSubscriberInterface
 
         $this->logger->error($exception);
 
-        $event->setResponse($this->viewHandler->handle(View::create($response, $statusCode)));
+        /** @var View $view */
+        $view = View::create($response, $statusCode);
+        $view->setFormat('json');
+
+        $event->setResponse($this->viewHandler->handle($view));
+
     }
 
     /**

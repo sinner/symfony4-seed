@@ -59,6 +59,7 @@ class AppUsersFixtures extends Fixture implements FixtureInterface
                 'password' => 'corypass',
                 'email' => 'cory@teravisiontech.com',
                 'confirmationToken' => '',
+                'role' => 'ROLE_USER',
             ],
             [
                 'username'    => 'eddy',
@@ -66,6 +67,7 @@ class AppUsersFixtures extends Fixture implements FixtureInterface
                 'password' => 'eddypass',
                 'email' => 'eddy@teravisiontech.com',
                 'confirmationToken' => 'some-token-string',
+                'role' => 'ROLE_USER',
             ],
             [
                 'username'    => 'joshua',
@@ -73,6 +75,7 @@ class AppUsersFixtures extends Fixture implements FixtureInterface
                 'password' => 'joshuapass',
                 'email' => 'joshua@teravisiontech.com',
                 'confirmationToken' => '',
+                'role' => 'ROLE_ADMIN',
             ],
         ];
 
@@ -83,6 +86,7 @@ class AppUsersFixtures extends Fixture implements FixtureInterface
             $user->setEmail($userData['email']);
             $user->setDisplayName($userData['displayName']);
             $user->setEnabled(true);
+            $user->addRole($userData['role']);
             if(strlen($userData['confirmationToken'])>0){
                 $user->setPasswordRequestedAt(new \DateTime('now'));
             }

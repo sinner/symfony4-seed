@@ -103,6 +103,14 @@ class JWTAuthenticationSubscriber implements EventSubscriberInterface
      */
     public function authenticationSuccess(Event\AuthenticationSuccessEvent $event)
     {
+        if (is_array($event->getData()) &&
+            array_key_exists('code', $event->getData()) &&
+            array_key_exists('data', $event->getData()) &&
+            array_key_exists('message', $event->getData()) &&
+            array_key_exists('is_success', $event->getData())) {
+            return;
+        }
+
         $event->setData(
             $this->serializer
                 ->toArray(

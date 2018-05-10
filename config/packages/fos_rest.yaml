@@ -12,7 +12,7 @@ fos_rest:
         rules:
             path: '^/'
             priorities: ['json']
-            fallback_format: json
+            fallback_format: 'json'
             prefer_extension: false
     routing_loader:
         default_format:  json
@@ -23,6 +23,7 @@ fos_rest:
             json: true
             xml: false
             rss: false
+            html: false
         mime_types:
             json: ['application/json', 'application/x-json']
         jsonp_handler: false

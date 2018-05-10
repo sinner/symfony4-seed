@@ -81,7 +81,21 @@ class User extends BaseUser implements EntityInterface
      */
     protected $email;
 
-    use EntityLogTrait;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @JMS\Accessor(getter="getCreatedAt", setter="SetCreatedAt")
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @JMS\Accessor(getter="getUpdatedAt", setter="setUpdatedAt")
+     */
+    protected $updatedAt;
 
     /**
      * @return string|null
@@ -138,9 +152,48 @@ class User extends BaseUser implements EntityInterface
     }
 
     /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     * @return User
+     */
+    public function setCreatedAt(\DateTime $createdAt): User
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     * @return User
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): User
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
      * @ORM\PrePersist()
      */
     public function beforeCreate() {
+        $creationDate = new \DateTime();
+        $this->setCreatedAt($creationDate);
+        $this->setUpdatedAt($creationDate);
         $this->publicId = sha1($this->username.$this->email.date('Y-m-d H:i:s'));
         $this->confirmationToken = (empty($this->confirmationToken))?sha1($this->username.$this->email.date('Y-m-d H:i:s')):$this->confirmationToken;
         $this->displayName = (empty($this->displayName))?$this->getUsername():$this->displayName;

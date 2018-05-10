@@ -47,6 +47,11 @@ class KernelViewSubscriber implements EventSubscriberInterface
     {
         $controllerResult = $event->getControllerResult();
         $requestAttributes = $event->getRequest()->attributes;
+
+        if ($controllerResult instanceof ApiResponse){
+            return;
+        }
+
         $event->setControllerResult(
             (new ApiResponse)
                 ->setMessage(

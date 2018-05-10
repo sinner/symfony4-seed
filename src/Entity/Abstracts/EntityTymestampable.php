@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
  * Trait EntityLogTrait
  * @package App\Entity\Abstracts
  */
-trait EntityLogTrait
+class EntityTymestampable
 {
     /**
      * A list of reference proxies.
