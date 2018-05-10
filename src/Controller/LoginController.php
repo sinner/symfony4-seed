@@ -30,9 +30,9 @@ class LoginController extends FOSRestController implements ClassResourceInterfac
      *     @SWG\Parameter(
      *         name="Credentials",
      *         in="body",
-     *         description="Credentials - Login and Password",
+     *         description="Credentials - Username and Password",
      *         required=true,
-     *         type="object",
+     *         type="string",
      *         @SWG\Schema(type="object",
      *             @SWG\Property(property="username", description="Username", type="string"),
      *             @SWG\Property(property="password", description="User Password", type="string"),
