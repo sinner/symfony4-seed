@@ -83,6 +83,8 @@ class AppUsersFixtures extends Fixture implements FixtureInterface
             $user->setEmail($userData['email']);
             $user->setDisplayName($userData['displayName']);
             $user->setEnabled(true);
+            $user->setCreatedAt(new \DateTime('2018-05-20 12:15:00'));
+            $user->setUpdatedAt(new \DateTime('2018-05-20 12:15:00'));
             if(strlen($userData['confirmationToken'])>0){
                 $user->setPasswordRequestedAt(new \DateTime('now'));
             }
