@@ -17,7 +17,6 @@
         <!-- define your env variables for the test env here -->
         <env name="APP_DEFAULT_LOCATION" value="en" />
         <env name="DATABASE_URL" value="pgsql://postgres:postgres@localhost:15432/diocesan" />
-
     </php>
 
     <testsuites>
@@ -34,7 +33,12 @@
                 <directory>./vendor</directory>
                 <directory>./tests</directory>
                 <file>./src/Kernel.php</file>
+                <directory>./src/DataFixtures/</directory>
+                <directory>./src/Entity/</directory>
                 <directory>./src/Migrations/</directory>
+                <directory>./src/Form/</directory>
+                <directory>./src/Exception/</directory>
+                <directory>./src/Controller/</directory>
             </exclude>
         </whitelist>
     </filter>
