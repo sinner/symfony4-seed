@@ -92,6 +92,15 @@ class User extends BaseUser implements EntityInterface
     protected $createdAt;
 
     /**
+     * @var array
+     *
+     * @JMS\Groups({"admin_read", "admin_write"})
+     * @JMS\Accessor(getter="getRoles", setter="setRoles")
+     * @JMS\Type("array<string>")
+     */
+    protected $roles;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)

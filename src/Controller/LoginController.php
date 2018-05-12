@@ -46,7 +46,11 @@ class LoginController extends FOSRestController implements ClassResourceInterfac
      *     ),
      *     @SWG\Response(
      *         response="200",
-     *         description="Returned when the login process is successful."
+     *         description="Returned when the login process is successful.",
+     *         @SWG\Schema(ref=@Model(
+     *             type="App\Services\Globals\ApiResponse",
+     *             groups={"api_response"}
+     *         ))
      *     ),
      *     @SWG\Response(
      *         response="401",

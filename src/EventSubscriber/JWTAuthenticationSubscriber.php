@@ -11,6 +11,7 @@ use App\Services\Globals\ApiResponse,
     JMS\Serializer\SerializerInterface,
     JMS\Serializer\SerializationContext,
     Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class JWTAuthentication
@@ -65,6 +66,7 @@ class JWTAuthenticationSubscriber implements EventSubscriberInterface
             $this->serializer
                 ->serialize(
                     (new ApiResponse)
+                        ->setCode(Response::HTTP_UNAUTHORIZED)
                         ->setMessage($this->translator->trans('request.invalid_token'))
                         ->setIsSuccess(false),
                     'json',
@@ -88,6 +90,7 @@ class JWTAuthenticationSubscriber implements EventSubscriberInterface
             $this->serializer
                 ->serialize(
                     (new ApiResponse)
+                        ->setCode(Response::HTTP_UNAUTHORIZED)
                         ->setMessage($response->getMessage())
                         ->setIsSuccess(false),
                     'json',

@@ -96,6 +96,7 @@ class KernelExceptionSubscriber implements EventSubscriberInterface
             $statusCode = $exception->getStatusCode();
         }
 
+        $response->setCode($statusCode);
         $this->logger->error($exception);
 
         /** @var View $view */
