@@ -22,7 +22,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *        @ORM\UniqueConstraint(name="public_uidx", columns={"public_id"})
  *     }
  * )
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\Entity\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
  *
  * @UniqueEntity("email")

@@ -14,6 +14,13 @@ class UserServiceTest extends WebTestCase
      * @var UserService
      */
     protected $userService;
+    protected $client;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->client = static::createClient();
+        $this->userService = $this->client->getContainer()->get('test.user.service');
+    }
 
     /**
      * Set the test environment foreach test case that will run this class
@@ -21,14 +28,18 @@ class UserServiceTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $client = static::createClient();
-        $this->userService = $client->getContainer('App\Services\Entity\UserService');
         $this->setDatabase();
     }
 
-    public function testSomething()
+    /**
+     * @covers \App\Services\Entity\UserService::findAll
+     *
+     */
+    public function testFindAllUser()
     {
-        $this->assertTrue(true);
+        $users = $this->userService->findAll();
+        $this->assertNotEmpty($users);
+
     }
 
 
