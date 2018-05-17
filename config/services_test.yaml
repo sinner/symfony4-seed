@@ -3,11 +3,6 @@ services:
         public: true
         autoconfigure: true
         autowire: true
-    #test.user.service:
-    #    class: App\Services\Entity\UserService
-    #    public: true
-    #    arguments:
-    #     - doctrine.orm.entity_manager
 
     test.user.service: '@App\Services\Entity\UserService'
 
