@@ -13,6 +13,7 @@ use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Faker\Factory;
 
 /**
  * Class AppUsersFixtures
@@ -94,6 +95,17 @@ class AppUsersFixtures extends Fixture implements FixtureInterface
             }
             $this->userManager->updateUser($user);
         }
-
+        //create a 50 users with faker
+        $faker = Factory::create();
+        for ($i = 0; $i < 50; $i++) {
+            $fakeUser = new User();
+            $fakeUser->setUsername($faker->unique()->userName);
+            $fakeUser->setPlainPassword($faker->word);
+            $fakeUser->setEmail($faker->unique()->email);
+            $fakeUser->setDisplayName($faker->name);
+            $fakeUser->setEnabled(true);
+            $fakeUser->addRole('ROLE_ADMIN');
+            $this->userManager->updateUser($fakeUser);
+        }
     }
 }
