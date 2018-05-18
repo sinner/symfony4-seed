@@ -99,6 +99,20 @@ $ openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
 ```
 
 ## PHPUnit and Unit Tests (Services and Other Methods)
+In order to run tests with phpunit you must be inside the docker container that in where the projects lies.
+
+- if you want to run all the test cases type at the terminal:
+```bash
+vendor/bin/phpunit
+```
+- some times you may need to run all the test cases contained in a class, you can type:
+```bash
+vendor/bin/phpunit --filter UserServiceTest
+```
+- some others, you may need to run a specific test case which is a method, you can type:
+```bash
+vendor/bin/phpunit --filter testFindAllUsers 
+```
 
 ## Behat and Feature Tests (Endpoints)
 
@@ -116,12 +130,38 @@ If you want to run a specific scenario of a specific feature file:
 ```bash
 vendor/bin/behat features/login.feature:18
 ```
+### Test preparation
+In order to run the test that you've created it's recommended to use SetupTrait that will create a fresh database and run
+the application fixtures.
+at the setUp method type:
+```php
+$this->setDatabase();
+```
+
+at the tearDownAfterClass method use the method to drop the database, this will be usefull cause it will clean everything
+to run a new test cases class
+
+```php
+UserServiceTest::dropDatabase();
+```
+
+## `Note`
+if your test need data in order to work, create a fixture and load it when you are executing your test
 
 ### Coverage reporting
 
 In order to perform a code coverage reporting it's necessary to install xdebug
 
 then you can run:
-```
-bin/phpunit --coverage-html public/phpunit-report
+```bash
+vendor/bin/phpunit --coverage-html public/phpunit-report
 ``` 
+this, will store at the folder `public/phpunit-report` a html that will give you some usefull information about the tests 
+results.
+
+In order to obtain a valid report information it's necessary to use the correctly docblock annotations for phpunit, for example:
+- @covers `ClassName::methodName`
+- @group `feature`
+
+for further information visit: 
+[https://phpunit.de/manual/6.5/en/appendixes.annotations.html](https://phpunit.de/manual/6.5/en/appendixes.annotations.html) 

@@ -37,7 +37,7 @@ class UserServiceTest extends WebTestCase
      * @covers \App\Services\Entity\UserService::findAll
      * @group user management
      */
-    public function testFindAllUser()
+    public function testFindAllUsers()
     {
         $users = $this->userService->findAll();
         $this->assertNotEmpty($users);
