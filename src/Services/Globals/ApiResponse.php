@@ -8,8 +8,6 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * Base response for all api services.
- * Class ApiResponse
- * @package EN\ApiResponse\ApiBundle\Response
  */
 class ApiResponse
 {

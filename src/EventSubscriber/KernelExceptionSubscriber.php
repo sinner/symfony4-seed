@@ -72,13 +72,16 @@ class KernelExceptionSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $message = (strlen($event->getException()->getMessage())>0)?$event->getException()->getMessage():
+            $this->translator->trans('request.unknown_error');
+
         $response = (new ApiResponse)
-            ->setMessage($this->translator->trans('request.unknown_error'))
+            ->setMessage($message)
             ->setData(
                 [
                     // Lets only expose exception messages and stacktraces on non-prod environments to minize risk of exposing sensitive information.
                     // If errors occur on prod, we can check the logs.
-                    'details' => ($this->environment!='prod') ? (string)$event->getException() : ''
+                    'details' => ($this->environment!='prod') ? (string)$event->getException() : $message
                 ]
             )
             ->setIsSuccess(false);

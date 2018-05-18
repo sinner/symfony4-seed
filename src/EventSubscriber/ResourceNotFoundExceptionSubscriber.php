@@ -7,6 +7,7 @@ namespace App\EventSubscriber;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use App\Services\Globals\ApiResponse;
@@ -40,8 +41,9 @@ class ResourceNotFoundExceptionSubscriber implements EventSubscriberInterface
         $response = $event->getResponse();
         $exception = $event->getException();
 
-        if (!($this->viewHandler instanceof ViewHandlerInterface)
+        if (   !($this->viewHandler instanceof ViewHandlerInterface)
             || !($exception instanceof ApiResourceNotFoundException)
+            || !($exception instanceof NotFoundHttpException)
             || $response instanceof ApiResponse
         ) {
             return;

@@ -1,0 +1,8 @@
+parameters:
+    app_test_api_url: '%env(APP_TEST_API_URL)%'
+csa_guzzle:
+    logger: true
+    clients:
+        local_test_api:
+            config:
+                base_uri: "%app_test_api_url%"
