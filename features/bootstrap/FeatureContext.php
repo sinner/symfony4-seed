@@ -60,8 +60,8 @@ class FeatureContext implements Context
      */
     public function createSchema()
     {
-        system('bin/console doctrine:database:drop --if-exists --env=test --force --no-interaction --no-debug --quiet');
-        system('bin/console doctrine:database:create --env=test --no-interaction --no-debug --quiet');
+        system('bin/console doctrine:database:drop --if-exists --env=test --force --no-interaction --quiet');
+        system('bin/console doctrine:database:create --env=test --no-interaction --quiet');
         system('bin/console doctrine:migration:migrate --env=test --no-interaction --no-debug --quiet');
     }
 

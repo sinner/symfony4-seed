@@ -15,36 +15,17 @@
         <env name="APP_SECRET" value="s$cretf0rt3st" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <!-- define your env variables for the test env here -->
-        <env name="APP_DEFAULT_LOCATION" value="en" />
-        <env name="DATABASE_URL" value="pgsql://postgres:postgres@localhost:15432/diocesan" />
     </php>
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>tests/</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>./src/</directory>
-            <exclude>
-                <directory>./public</directory>
-                <directory>./vendor</directory>
-                <directory>./tests</directory>
-                <file>./src/Kernel.php</file>
-                <directory>./src/DataFixtures/</directory>
-                <directory>./src/Entity/</directory>
-                <directory>./src/Migrations/</directory>
-                <directory>./src/Form/</directory>
-                <directory>./src/Exception/</directory>
-                <directory>./src/Controller/</directory>
-                <directory>./src/EventSubscriber/</directory>
-            </exclude>
+            <directory>src</directory>
         </whitelist>
     </filter>
-
-    <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-    </listeners>
 </phpunit>

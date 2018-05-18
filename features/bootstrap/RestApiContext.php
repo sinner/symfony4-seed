@@ -9,7 +9,7 @@ use Behatch\Json\Json;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
-use \PHPUnit\Framework\Assert as Assertions;
+use PHPUnit\Framework\Assert as Assertions;
 use Symfony\Component\HttpFoundation\Request;
 use Behatch\Json\JsonInspector;
 use Behatch\Json\JsonSchema;
@@ -61,7 +61,7 @@ class RestApiContext implements Context
     public function __construct(ClientInterface $client)
     {
         $this->client = $client;
-        $this->tokenExtractorHeaderName = 'EngagedNation-Auth-Token';
+        $this->tokenExtractorHeaderName = 'Authorization';
     }
 
     /**
@@ -205,7 +205,7 @@ class RestApiContext implements Context
      *
      * @param string       $method request method
      * @param string       $url    relative url
-     * @param PyStringNode $string request body
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws Exception
      *
@@ -251,11 +251,13 @@ class RestApiContext implements Context
     }
 
     /**
-     * @When /^(?:I )?send a multipart "([A-Z]+)" request to "([^"]+)" with form data:$/
      *
      * @param string $method
      * @param string $url
      * @param TableNode $post
+     * @throws Exception
+     *
+     * @When /^(?:I )?send a multipart "([A-Z]+)" request to "([^"]+)" with form data:$/
      */
     public function iSendAMultipartRequestToWithFormData(string $method, string $url, TableNode $post)
     {
